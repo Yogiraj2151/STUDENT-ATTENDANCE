@@ -1376,9 +1376,20 @@ footer {
 
 <div class="toast" id="toast"></div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 "use strict";
 
+// SUPABASE CONNECTION
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
 /*
  * FRONTEND DEMO ONLY
  * Data is stored in this browser using localStorage.
