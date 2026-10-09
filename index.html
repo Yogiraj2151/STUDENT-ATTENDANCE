@@ -1,1 +1,1486 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendly | Smart Attendance System</title>
+
+    <meta name="description"
+          content="A modern student attendance management system.">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #087f75;
+            --primary-dark: #06665f;
+            --primary-light: #e5f6f2;
+            --background: #f6f9fa;
+            --white: #ffffff;
+            --text: #172b35;
+            --muted: #7c8b92;
+            --border: #e8eef0;
+            --green: #16845e;
+            --red: #c54c51;
+            --orange: #b87a22;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* LOGIN PAGE */
+
+        .login-page {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+        }
+
+        .hero {
+            background: linear-gradient(145deg, #073e3e, #087f75);
+            color: white;
+            padding: 45px 8%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 430px;
+            height: 430px;
+            border: 1px solid #ffffff25;
+            border-radius: 50%;
+            right: -180px;
+            top: 25%;
+            box-shadow: 0 0 0 65px #ffffff08,
+                        0 0 0 130px #ffffff05;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+        }
+
+        .hero .brand-icon {
+            background: #ffffff20;
+            border: 1px solid #ffffff40;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            margin: 50px auto;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--primary);
+            margin-bottom: 14px;
+        }
+
+        .hero .eyebrow {
+            color: #92e7d8;
+        }
+
+        .hero h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(38px, 5vw, 64px);
+            letter-spacing: -2px;
+            line-height: 1.12;
+            margin-bottom: 22px;
+        }
+
+        .hero-content p {
+            color: #d1e9e6;
+            line-height: 1.9;
+            font-size: 15px;
+        }
+
+        .features {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .features span {
+            padding: 9px 12px;
+            border: 1px solid #ffffff35;
+            border-radius: 30px;
+            font-size: 11px;
+        }
+
+        .hero-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: #b4d9d4;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-panel {
+            display: grid;
+            place-items: center;
+            padding: 35px 22px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 390px;
+        }
+
+        .login-card h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 29px;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 17px 0 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dfe7e9;
+            border-radius: 9px;
+            outline: none;
+            background: white;
+            color: var(--text);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px #087f7515;
+        }
+
+        .primary-btn {
+            border: none;
+            background: var(--primary);
+            color: white;
+            border-radius: 9px;
+            padding: 13px 18px;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .full-btn {
+            width: 100%;
+            margin-top: 23px;
+        }
+
+        .message {
+            margin-top: 13px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--red);
+        }
+
+        .login-bottom {
+            margin-top: 23px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .text-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .demo-note {
+            margin-top: 22px;
+            padding: 12px;
+            background: #f0f8f6;
+            border-radius: 8px;
+            font-size: 11px;
+            line-height: 1.7;
+            color: #52726d;
+        }
+
+        /* DASHBOARD */
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 245px;
+            background: white;
+            border-right: 1px solid var(--border);
+            padding: 25px 16px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar .brand {
+            font-size: 22px;
+            padding: 0 8px 35px;
+        }
+
+        .nav-label {
+            color: #a2afb3;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            padding: 0 12px 12px;
+        }
+
+        .nav-btn {
+            position: relative;
+            width: 100%;
+            padding: 13px 12px;
+            border: none;
+            background: transparent;
+            color: #718087;
+            border-radius: 9px;
+            text-align: left;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .nav-btn:hover {
+            background: #f4f8f8;
+        }
+
+        .nav-btn.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .user-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            margin-top: 20px;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            display: grid;
+            place-items: center;
+            background: #dff2ee;
+            color: var(--primary);
+            border-radius: 10px;
+            font-weight: 800;
+        }
+
+        .user-info {
+            min-width: 0;
+        }
+
+        .user-info strong {
+            display: block;
+            font-size: 11px;
+            overflow-wrap: anywhere;
+        }
+
+        .user-info span {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .topbar {
+            min-height: 70px;
+            padding: 15px 30px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .breadcrumb {
+            font-size: 12px;
+        }
+
+        .system-status {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #36b68d;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 7px;
+        }
+
+        .content {
+            max-width: 1450px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+
+        .welcome h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 27px;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 19px;
+        }
+
+        .stat-icon {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 17px;
+        }
+
+        .purple { background: #f0eaff; color: #8760cf; }
+        .green { background: #e2f7ed; color: #1d9a70; }
+        .orange { background: #fff0e3; color: #d88743; }
+        .blue { background: #e4f2ff; color: #3989ca; }
+
+        .stat-card p {
+            color: var(--muted);
+            font-size: 11px;
+            margin-bottom: 7px;
+        }
+
+        .stat-card h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 29px;
+        }
+
+        .stat-card small {
+            display: block;
+            color: #9aa7ac;
+            font-size: 10px;
+            margin-top: 7px;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .panel-heading h3 {
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .panel-heading p {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        th {
+            padding: 13px 20px;
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: #96a4a8;
+            background: #fafcfc;
+            border-top: 1px solid #f0f3f4;
+            border-bottom: 1px solid #edf1f2;
+        }
+
+        td {
+            padding: 14px 20px;
+            font-size: 11px;
+            border-bottom: 1px solid #f0f3f4;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .present { background: #e3f7ed; color: #16845e; }
+        .absent { background: #ffebeb; color: #c54c51; }
+        .late { background: #fff3df; color: #b87a22; }
+
+        .action-row {
+            display: flex;
+            gap: 5px;
+        }
+
+        .small-btn {
+            border: 1px solid var(--border);
+            background: white;
+            padding: 7px 9px;
+            border-radius: 6px;
+            font-size: 10px;
+        }
+
+        .small-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .empty {
+            padding: 35px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .toolbar input {
+            width: auto;
+            max-width: 180px;
+            padding: 10px;
+            font-size: 11px;
+        }
+
+        .secondary-btn {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 10px 13px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .secondary-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            color: #a0adb2;
+            font-size: 10px;
+            padding: 15px 2px;
+        }
+
+        @media (max-width: 1050px) {
+            .sidebar { width: 205px; }
+            .content { padding: 22px; }
+            .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 700px) {
+            .login-page { grid-template-columns: 1fr; }
+            .hero { min-height: 330px; padding: 25px; }
+            .hero h1 { font-size: 43px; }
+            .hero-content { margin: 35px 0; }
+            .hero-footer { font-size: 8px; }
+
+            .app { display: block; }
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+                padding: 13px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .sidebar .brand { padding: 0 3px 13px; }
+            .nav-label, .sidebar-bottom { display: none; }
+            .sidebar nav { display: flex; overflow-x: auto; gap: 5px; }
+            .nav-btn { width: auto; white-space: nowrap; flex-shrink: 0; }
+
+            .topbar { padding: 14px; min-height: 55px; }
+            .system-status { font-size: 9px; }
+            .content { padding: 20px 13px; }
+            .welcome { align-items: flex-start; }
+            .welcome h1 { font-size: 22px; }
+            .stats { gap: 10px; }
+            .stat-card { padding: 14px; }
+            .stat-card h2 { font-size: 25px; }
+            .panel-heading { padding: 16px; flex-wrap: wrap; }
+            .toolbar { flex-wrap: wrap; }
+            .page-footer { font-size: 8px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<section id="loginPage" class="login-page">
+
+    <div class="hero">
+        <div class="brand">
+            <span class="brand-icon">A</span>
+            <span>attendly.</span>
+        </div>
+
+        <div class="hero-content">
+            <div class="eyebrow">SMARTER CAMPUS MANAGEMENT</div>
+
+            <h1>Every presence<br>has a purpose.</h1>
+
+            <p>
+                A smarter way to manage attendance, support students,
+                and keep your campus connected.
+            </p>
+
+            <div class="features">
+                <span>✓ Daily attendance</span>
+                <span>✓ Student records</span>
+                <span>✓ Smart reports</span>
+            </div>
+        </div>
+
+        <div class="hero-footer">
+            <span>MADE FOR MODERN EDUCATION</span>
+            <span>ATTENDLY © 2026</span>
+        </div>
+    </div>
+
+    <div class="login-panel">
+        <form id="loginForm" class="login-card">
+            <div class="eyebrow">WELCOME BACK</div>
+
+            <h2>Sign in to Attendly</h2>
+
+            <p class="subtitle">
+                Enter your account details to access your attendance dashboard.
+            </p>
+
+            <label for="email">Email address</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="you@college.edu"
+                required
+                autocomplete="username"
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+                autocomplete="current-password"
+            >
+
+            <button type="submit" class="primary-btn full-btn">
+                Sign in →
+            </button>
+
+            <div id="loginMessage" class="message"></div>
+
+            <div class="demo-note">
+                <strong>Demo preview</strong><br>
+                This standalone HTML file uses browser-based demo login.
+                Connect Supabase before using real accounts or student records.
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- APPLICATION DASHBOARD -->
+<section id="appPage" class="app hidden">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">A</span>
+            <span>attendly.</span>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <nav id="navigation">
+            <button class="nav-btn active" data-section="overview">
+                ▦ &nbsp; Overview
+            </button>
+
+            <button class="nav-btn" data-section="students">
+                ♙ &nbsp; Students
+            </button>
+
+            <button class="nav-btn" data-section="attendance">
+                ✓ &nbsp; Attendance
+            </button>
+
+            <button class="nav-btn" data-section="reports">
+                ▤ &nbsp; Reports
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button class="nav-btn" id="logoutButton">
+                ↪ &nbsp; Sign out
+            </button>
+
+            <div class="user-box">
+                <div class="avatar" id="userAvatar">A</div>
+
+                <div class="user-info">
+                    <strong id="userName">Administrator</strong>
+                    <span id="userRole">Administrator</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div class="breadcrumb">
+                Workspace / <strong id="breadcrumbTitle">Overview</strong>
+            </div>
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+                Demo mode
+            </div>
+        </header>
+
+        <div class="content">
+
+            <!-- OVERVIEW -->
+            <section id="overview" class="section active">
+                <div class="welcome">
+                    <div>
+                        <div class="eyebrow" id="currentDate"></div>
+                        <h1 id="welcomeTitle">Good morning!</h1>
+                        <p>Here's what's happening with attendance today.</p>
+                    </div>
+
+                    <button class="secondary-btn" onclick="exportCSV()">
+                        ↓ Export CSV
+                    </button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-icon purple">♙</div>
+                        <p>Total students</p>
+                        <h2 id="totalStudents">0</h2>
+                        <small>Registered students</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">✓</div>
+                        <p>Present today</p>
+                        <h2 id="totalPresent">0</h2>
+                        <small>Marked present</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">↗</div>
+                        <p>Absent today</p>
+                        <h2 id="totalAbsent">0</h2>
+                        <small>Marked absent</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">◷</div>
+                        <p>Marked late</p>
+                        <h2 id="totalLate">0</h2>
+                        <small>Arrived late</small>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Today's attendance</h3>
+                            <p>Latest attendance records</p>
+                        </div>
+
+                        <button class="secondary-btn"
+                                onclick="showSection('attendance')">
+                            Mark attendance
+                        </button>
+                    </div>
+
+                    <div id="overviewTable"></div>
+                </div>
+            </section>
+
+            <!-- STUDENTS -->
+            <section id="students" class="section">
+                <div class="welcome">
+                    <div>
+                        <div class="eyebrow">DIRECTORY</div>
+                        <h1>Student management</h1>
+                        <p>Register and manage student information.</p>
+                    </div>
+
+                    <button class="primary-btn" id="addStudentButton">
+                        + Add student
+                    </button>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Student directory</h3>
+                            <p>All registered demo students</p>
+                        </div>
+
+                        <input
+                            id="studentSearch"
+                            placeholder="Search students..."
+                            aria-label="Search students"
+                            style="max-width:190px"
+                        >
+                    </div>
+
+                    <div id="studentsTable"></div>
+                </div>
+            </section>
+
+            <!-- ATTENDANCE -->
+            <section id="attendance" class="section">
+                <div class="welcome">
+                    <div>
+                        <div class="eyebrow">DAILY RECORDS</div>
+                        <h1>Attendance management</h1>
+                        <p>Mark attendance for each student.</p>
+                    </div>
+
+                    <div class="toolbar">
+                        <input type="date" id="attendanceDate"
+                               aria-label="Attendance date">
+
+                        <button class="secondary-btn" onclick="exportCSV()">
+                            Export CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Mark student attendance</h3>
+                            <p>Select Present, Absent, or Late.</p>
+                        </div>
+                    </div>
+
+                    <div id="attendanceTable"></div>
+                </div>
+            </section>
+
+            <!-- REPORTS -->
+            <section id="reports" class="section">
+                <div class="welcome">
+                    <div>
+                        <div class="eyebrow">ANALYTICS</div>
+                        <h1>Attendance reports</h1>
+                        <p>Review attendance records and export reports.</p>
+                    </div>
+
+                    <button class="primary-btn" onclick="exportCSV()">
+                        ↓ Download CSV
+                    </button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-icon green">✓</div>
+                        <p>Total present records</p>
+                        <h2 id="reportPresent">0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">↗</div>
+                        <p>Total absent records</p>
+                        <h2 id="reportAbsent">0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">◷</div>
+                        <p>Total late records</p>
+                        <h2 id="reportLate">0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">%</div>
+                        <p>Overall attendance</p>
+                        <h2 id="reportPercentage">0%</h2>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Attendance history</h3>
+                            <p>Saved demo attendance records</p>
+                        </div>
+                    </div>
+
+                    <div id="reportsTable"></div>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <span>© 2026 Attendly. Smart campus management.</span>
+                <span>Demo version · Not connected to a database</span>
+            </footer>
+        </div>
+    </main>
+</section>
+
+<script>
+    /*
+      IMPORTANT:
+      This is a FRONTEND DEMO ONLY.
+      Demo login is not secure authentication.
+      Data is stored in this browser's localStorage.
+      Do not use this version for real student information.
+      Connect Supabase Auth and secure database policies for production.
+    */
+
+    const DEMO_EMAIL = "admin@attendly.demo";
+    const DEMO_PASSWORD = "Admin123!";
+
+    let currentUser = null;
+
+    let students = JSON.parse(
+        localStorage.getItem("attendly_students") || "null"
+    ) || [
+        { id: 1, name: "Aarav Sharma", roll: "AIDS001", className: "SE AIDS" },
+        { id: 2, name: "Ananya Patil", roll: "AIDS002", className: "SE AIDS" },
+        { id: 3, name: "Rohan Deshmukh", roll: "AIDS003", className: "SE AIDS" },
+        { id: 4, name: "Sneha Kulkarni", roll: "AIDS004", className: "SE AIDS" },
+        { id: 5, name: "Aditya Joshi", roll: "AIDS005", className: "SE AIDS" }
+    ];
+
+    let attendance = JSON.parse(
+        localStorage.getItem("attendly_attendance") || "[]"
+    );
+
+    const today = getLocalDate();
+
+    document.getElementById("attendanceDate").value = today;
+
+    document.getElementById("currentDate").textContent =
+        new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric"
+        }).toUpperCase();
+
+    function getLocalDate() {
+        const now = new Date();
+        const offset = now.getTimezoneOffset() * 60000;
+        return new Date(now.getTime() - offset)
+            .toISOString()
+            .slice(0, 10);
+    }
+
+    function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, char => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[char]);
+    }
+
+    function saveData() {
+        localStorage.setItem(
+            "attendly_students",
+            JSON.stringify(students)
+        );
+
+        localStorage.setItem(
+            "attendly_attendance",
+            JSON.stringify(attendance)
+        );
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", event => {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const message = document.getElementById("loginMessage");
+
+        if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+            currentUser = {
+                name: "Administrator",
+                role: "admin"
+            };
+
+            message.textContent = "";
+
+            document.getElementById("loginPage").classList.add("hidden");
+            document.getElementById("appPage").classList.remove("hidden");
+
+            document.getElementById("userName").textContent =
+                currentUser.name;
+
+            document.getElementById("userRole").textContent =
+                "Demo administrator";
+
+            document.getElementById("userAvatar").textContent = "A";
+
+            document.getElementById("welcomeTitle").textContent =
+                "Welcome back, Administrator.";
+
+            renderAll();
+        } else {
+            message.textContent =
+                "Invalid demo credentials. Use the credentials shown below.";
+        }
+    });
+
+    document.getElementById("logoutButton").addEventListener("click", () => {
+        currentUser = null;
+
+        document.getElementById("appPage").classList.add("hidden");
+        document.getElementById("loginPage").classList.remove("hidden");
+
+        document.getElementById("password").value = "";
+        document.getElementById("loginMessage").textContent = "";
+    });
+
+    document.querySelectorAll(".nav-btn[data-section]").forEach(button => {
+        button.addEventListener("click", () => {
+            showSection(button.dataset.section);
+        });
+    });
+
+    function showSection(sectionId) {
+        document.querySelectorAll(".section").forEach(section => {
+            section.classList.remove("active");
+        });
+
+        document.getElementById(sectionId).classList.add("active");
+
+        document.querySelectorAll(".nav-btn[data-section]").forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.section === sectionId
+            );
+        });
+
+        const labels = {
+            overview: "Overview",
+            students: "Students",
+            attendance: "Attendance",
+            reports: "Reports"
+        };
+
+        document.getElementById("breadcrumbTitle").textContent =
+            labels[sectionId] || "Overview";
+
+        renderAll();
+    }
+
+    function getStatus(studentId, date) {
+        return attendance.find(record =>
+            record.studentId === studentId &&
+            record.date === date
+        )?.status || "";
+    }
+
+    function setAttendance(studentId, status) {
+        const date = document.getElementById("attendanceDate").value;
+
+        if (!date) {
+            alert("Please select an attendance date.");
+            return;
+        }
+
+        const existing = attendance.find(record =>
+            record.studentId === studentId &&
+            record.date === date
+        );
+
+        if (existing) {
+            existing.status = status;
+        } else {
+            attendance.push({
+                studentId,
+                date,
+                status
+            });
+        }
+
+        saveData();
+        renderAll();
+    }
+
+    function statusBadge(status) {
+        if (!status) {
+            return '<span style="color:#9aa7ac">Not marked</span>';
+        }
+
+        return `<span class="badge ${status}">${
+            escapeHTML(status.charAt(0).toUpperCase() + status.slice(1))
+        }</span>`;
+    }
+
+    function renderStudents() {
+        const query = (
+            document.getElementById("studentSearch").value || ""
+        ).toLowerCase();
+
+        const filtered = students.filter(student =>
+            `${student.name} ${student.roll} ${student.className}`
+                .toLowerCase()
+                .includes(query)
+        );
+
+        if (!filtered.length) {
+            document.getElementById("studentsTable").innerHTML =
+                '<div class="empty">No students found.</div>';
+            return;
+        }
+
+        document.getElementById("studentsTable").innerHTML = `
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>ROLL NUMBER</th>
+                            <th>CLASS</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filtered.map(student => `
+                            <tr>
+                                <td>${escapeHTML(student.name)}</td>
+                                <td>${escapeHTML(student.roll)}</td>
+                                <td>${escapeHTML(student.className)}</td>
+                                <td>
+                                    <button class="small-btn"
+                                        onclick="deleteStudent(${student.id})">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    function renderAttendance() {
+        const date = document.getElementById("attendanceDate").value;
+
+        if (!students.length) {
+            document.getElementById("attendanceTable").innerHTML =
+                '<div class="empty">Register students before marking attendance.</div>';
+            return;
+        }
+
+        document.getElementById("attendanceTable").innerHTML = `
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>ROLL NUMBER</th>
+                            <th>CURRENT STATUS</th>
+                            <th>MARK ATTENDANCE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${students.map(student => {
+                            const status = getStatus(student.id, date);
+
+                            return `
+                                <tr>
+                                    <td>${escapeHTML(student.name)}</td>
+                                    <td>${escapeHTML(student.roll)}</td>
+                                    <td>${statusBadge(status)}</td>
+                                    <td>
+                                        <div class="action-row">
+                                            <button class="small-btn"
+                                                onclick="setAttendance(${student.id}, 'present')">
+                                                Present
+                                            </button>
+                                            <button class="small-btn"
+                                                onclick="setAttendance(${student.id}, 'absent')">
+                                                Absent
+                                            </button>
+                                            <button class="small-btn"
+                                                onclick="setAttendance(${student.id}, 'late')">
+                                                Late
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        }).join("")}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    function renderOverview() {
+        const date = getLocalDate();
+
+        const todaysRecords = attendance.filter(record =>
+            record.date === date
+        );
+
+        const count = status =>
+            todaysRecords.filter(record => record.status === status).length;
+
+        document.getElementById("totalStudents").textContent = students.length;
+        document.getElementById("totalPresent").textContent = count("present");
+        document.getElementById("totalAbsent").textContent = count("absent");
+        document.getElementById("totalLate").textContent = count("late");
+
+        if (!todaysRecords.length) {
+            document.getElementById("overviewTable").innerHTML =
+                '<div class="empty">No attendance has been marked today.</div>';
+            return;
+        }
+
+        document.getElementById("overviewTable").innerHTML = `
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>ROLL NUMBER</th>
+                            <th>STATUS</th>
+                            <th>DATE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${todaysRecords.map(record => {
+                            const student = students.find(
+                                item => item.id === record.studentId
+                            );
+
+                            if (!student) return "";
+
+                            return `
+                                <tr>
+                                    <td>${escapeHTML(student.name)}</td>
+                                    <td>${escapeHTML(student.roll)}</td>
+                                    <td>${statusBadge(record.status)}</td>
+                                    <td>${escapeHTML(record.date)}</td>
+                                </tr>
+                            `;
+                        }).join("")}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    function renderReports() {
+        const present = attendance.filter(r => r.status === "present").length;
+        const absent = attendance.filter(r => r.status === "absent").length;
+        const late = attendance.filter(r => r.status === "late").length;
+
+        const total = present + absent + late;
+        const percentage = total ? Math.round(present / total * 100) : 0;
+
+        document.getElementById("reportPresent").textContent = present;
+        document.getElementById("reportAbsent").textContent = absent;
+        document.getElementById("reportLate").textContent = late;
+        document.getElementById("reportPercentage").textContent =
+            percentage + "%";
+
+        if (!attendance.length) {
+            document.getElementById("reportsTable").innerHTML =
+                '<div class="empty">No records are available yet.</div>';
+            return;
+        }
+
+        const sorted = [...attendance].sort((a, b) =>
+            b.date.localeCompare(a.date)
+        );
+
+        document.getElementById("reportsTable").innerHTML = `
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>ROLL NUMBER</th>
+                            <th>DATE</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${sorted.map(record => {
+                            const student = students.find(
+                                s => s.id === record.studentId
+                            );
+
+                            if (!student) return "";
+
+                            return `
+                                <tr>
+                                    <td>${escapeHTML(student.name)}</td>
+                                    <td>${escapeHTML(student.roll)}</td>
+                                    <td>${escapeHTML(record.date)}</td>
+                                    <td>${statusBadge(record.status)}</td>
+                                </tr>
+                            `;
+                        }).join("")}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    function renderAll() {
+        renderOverview();
+        renderStudents();
+        renderAttendance();
+        renderReports();
+    }
+
+    document.getElementById("studentSearch").addEventListener(
+        "input",
+        renderStudents
+    );
+
+    document.getElementById("attendanceDate").addEventListener(
+        "change",
+        renderAll
+    );
+
+    document.getElementById("addStudentButton").addEventListener("click", () => {
+        const name = prompt("Enter the student's full name:");
+
+        if (!name || !name.trim()) return;
+
+        const roll = prompt("Enter the student's roll number:");
+
+        if (!roll || !roll.trim()) return;
+
+        if (students.some(s =>
+            s.roll.toLowerCase() === roll.trim().toLowerCase()
+        )) {
+            alert("That roll number already exists.");
+            return;
+        }
+
+        const className = prompt("Enter class name:", "SE AIDS");
+
+        students.push({
+            id: Date.now(),
+            name: name.trim(),
+            roll: roll.trim(),
+            className: (className || "SE AIDS").trim()
+        });
+
+        saveData();
+        renderAll();
+    });
+
+    function deleteStudent(studentId) {
+        if (!confirm("Delete this demo student and their attendance records?")) {
+            return;
+        }
+
+        students = students.filter(student => student.id !== studentId);
+
+        attendance = attendance.filter(
+            record => record.studentId !== studentId
+        );
+
+        saveData();
+        renderAll();
+    }
+
+    function exportCSV() {
+        const rows = [
+            ["Student", "Roll Number", "Class", "Date", "Status"]
+        ];
+
+        attendance.forEach(record => {
+            const student = students.find(
+                s => s.id === record.studentId
+            );
+
+            if (student) {
+                rows.push([
+                    student.name,
+                    student.roll,
+                    student.className,
+                    record.date,
+                    record.status
+                ]);
+            }
+        });
+
+        const csv = rows.map(row =>
+            row.map(value =>
+                '"' + String(value).replace(/"/g, '""') + '"'
+            ).join(",")
+        ).join("\r\n");
+
+        const blob = new Blob(["\uFEFF" + csv], {
+            type: "text/csv;charset=utf-8;"
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = "attendance-report.csv";
+        link.click();
+
+        URL.revokeObjectURL(url);
+    }
+
+    saveData();
+</script>
+
+</body>
+</html>
+
+
